@@ -5,11 +5,13 @@ import PlanetsContext from './context/PlanetsContext';
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
-  const [ filteredPlanets, setFilteredPlanets ] = useState();
+  const [filteredPlanets, setFilteredPlanets] = useState();
   const getPlanets = {
     planets,
     setPlanets,
-    nameFilter, setNameFilter, filteredPlanets
+    nameFilter,
+    setNameFilter,
+    filteredPlanets,
   };
   useEffect(() => {
     const fetchData = async () => {

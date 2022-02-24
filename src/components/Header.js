@@ -5,7 +5,7 @@ export default function Header() {
   const { nameFilter, setNameFilter } = useContext(PlanetsContext);
   useEffect(() => {
     console.log(nameFilter);
-  }, [nameFilter])
+  }, [nameFilter]);
   return (
     <header>
       <label htmlFor="name-input" className="label">
