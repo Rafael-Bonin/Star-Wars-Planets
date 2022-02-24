@@ -1,23 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Table() {
-  const { planets } = useContext(PlanetsContext);
-  const [nameFilter, setNameFilter] = useState('');
-  console.log(nameFilter);
+  const { planets, filteredPlanets } = useContext(PlanetsContext);
   return (
     <div className="field">
-      <label htmlFor="name-input" className="label">
-        Filter By Name
-        <input
-          data-testid="name-filter"
-          className="input is-info is-medium"
-          value={ nameFilter }
-          type="text"
-          id="name-input"
-          onChange={ ({ target }) => setNameFilter(target.value) }
-        />
-      </label>
       <table className="table is-bordered">
         <tr>
           <th>Name</th>
@@ -34,9 +21,7 @@ export default function Table() {
           <th>Edited</th>
           <th>URL</th>
         </tr>
-        { planets.length === 0 ? <p>loading</p> : planets.filter((planet) => (
-          planet.name.toLowerCase().includes(nameFilter.toLowerCase())))
-          .map((planet) => (
+        { planets.length === 0 ? <p>loading</p> : filteredPlanets.map((planet) => (
             <tr key={ planet.name }>
               <td>{ planet.name }</td>
               <td>{ planet.rotation_period }</td>

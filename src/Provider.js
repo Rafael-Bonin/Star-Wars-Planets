@@ -4,9 +4,12 @@ import PlanetsContext from './context/PlanetsContext';
 
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
+  const [ filteredPlanets, setFilteredPlanets ] = useState();
   const getPlanets = {
     planets,
     setPlanets,
+    nameFilter, setNameFilter, filteredPlanets
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -14,9 +17,16 @@ const Provider = ({ children }) => {
       const planetas = await getPlanetas.json();
       const resolve = await planetas.results;
       setPlanets(resolve);
+      setFilteredPlanets(resolve);
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const filtered = planets.filter((planet) => (
+      planet.name.toLowerCase().includes(nameFilter.toLowerCase())));
+    setFilteredPlanets(filtered);
+  }, [nameFilter, planets]);
   return (
     <PlanetsContext.Provider value={ getPlanets }>
       { children }
