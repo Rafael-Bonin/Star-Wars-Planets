@@ -5,7 +5,7 @@ import PlanetsContext from './context/PlanetsContext';
 const Provider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
-  const [filteredPlanets, setFilteredPlanets] = useState();
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [numberFilter, setNumberFilter] = useState({ column: '',
     comparison: '',
     value: '' });
@@ -24,8 +24,8 @@ const Provider = ({ children }) => {
       const getPlanetas = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const planetas = await getPlanetas.json();
       const resolve = await planetas.results;
-      setPlanets(resolve);
       setFilteredPlanets(resolve);
+      setPlanets(resolve);
     };
     fetchData();
   }, []);
@@ -40,7 +40,7 @@ const Provider = ({ children }) => {
   // filtrando por valores numericos
   useEffect(() => {
     const { column, value, comparison } = numberFilter;
-    const filtered = planets.filter((planet) => {
+    const filtered = filteredPlanets.filter((planet) => {
       if (column !== '' && value !== '' && comparison !== '') {
         if (comparison === 'maior que') {
           return parseInt(planet[column], 10) > value;
@@ -52,8 +52,7 @@ const Provider = ({ children }) => {
       return planet;
     });
     setFilteredPlanets(filtered);
-    console.log(filtered);
-  }, [numberFilter, planets]);
+  }, [numberFilter]);
   return (
     <PlanetsContext.Provider value={ getPlanets }>
       { children }
