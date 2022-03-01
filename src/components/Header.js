@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function Header() {
-  const { nameFilter, setNameFilter, setNumberFilter } = useContext(PlanetsContext);
+  const { nameFilter, setNameFilter, setNumberFilter,
+    options } = useContext(PlanetsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  useEffect(() => {
-    console.log(nameFilter);
-  }, [nameFilter]);
   return (
     <header className="is-flex is-justify-content-center is-align-items-center">
       <label htmlFor="name-input" className="label">
@@ -31,11 +29,8 @@ export default function Header() {
           className="select is-link"
           onChange={ ({ target }) => setColumn(target.value) }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { options.map((option) => (
+            <option key={ option } value={ option }>{ option }</option>)) }
         </select>
       </label>
       <label htmlFor="comparison" className="label">
@@ -66,7 +61,7 @@ export default function Header() {
         type="button"
         data-testid="button-filter"
         className="button is-info is-rounded"
-        onClick={ () => setNumberFilter({ column, comparison, value }) }
+        onClick={ () => (setNumberFilter({ column, comparison, value })) }
       >
         Filter
       </button>
