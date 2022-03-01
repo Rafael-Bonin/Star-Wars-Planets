@@ -66,7 +66,7 @@ const Provider = ({ children }) => {
     });
     setFilteredPlanets(filtered);
     setOptions(options.filter((option) => option !== column));
-  }, [filteredPlanets, numberFilter, options]);
+  }, [numberFilter]);
 
   return (
     <PlanetsContext.Provider value={ context }>
